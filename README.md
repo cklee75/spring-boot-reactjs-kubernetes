@@ -278,3 +278,21 @@ Project Link: [https://github.com/amrityam/spring-boot-reactjs-kubernetes](https
 [facebook-url]: https://www.facebook.com/amrityam
 
 
+# Readme
+
+```
+eval $(minikube docker-env) 
+cd corona-tracker-backend/
+mvn spring-boot:build-image -Dmaven.test.skip -Dspring-boot.build-image.imageName=amrityam/corona-tracker-backend:1.0.0
+```
+
+read log
+```
+kubectl get pod -n corona-tracker-app-namespace -l "app=corona-tracker-backend" --no-headers | awk '{print $1}' | xargs -I {} sh -c 'echo {}; kubectl logs --follow {} -n corona-tracker-app-namespace'
+```
+
+k8s
+```
+k apply -f rbac-cluster-role.yaml
+k apply -f corona-tracker-backend.yaml
+```
