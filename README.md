@@ -295,4 +295,16 @@ k8s
 ```
 k apply -f rbac-cluster-role.yaml
 k apply -f corona-tracker-backend.yaml
+k apply -f corona-tracker-frontend.yaml
+```
+
+Expose backend with port 8080 as frontend will invoke AJAX via http://localhost:8080/coronatracker/statisticsbycountry (localhost and port 8080 only)
+```
+kubectl port-forward service/corona-tracker-backend 8080:8080 --namespace corona-tracker-app-namespace
+```
+The backend calls https://www.trackcorona.live/api/countries API, which is down and always returns 404, then the API returns 500 to frontend. 
+
+Expose frontend
+```
+minikube service -n corona-tracker-app-namespace corona-tracker-frontend-service
 ```
